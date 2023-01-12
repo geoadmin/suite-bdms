@@ -189,8 +189,6 @@ class GetGeologyLayer(Action):
             layer.lithology_id_cli AS lithology,
             layer.lithostratigraphy_id_cli AS lithostratigraphy,
             layer.chronostratigraphy_id_cli AS chronostratigraphy,
-            layer.tectonic_unit_id_cli AS tectonic_unit,
-            layer.symbol_id_cli AS symbol,
             COALESCE(
                 mlpr112, '{}'::int[]
             ) AS color,
@@ -203,7 +201,6 @@ class GetGeologyLayer(Action):
             /*COALESCE(
                 mlpr113, '{}'::int[]
             ) AS jointing,*/
-            layer.soil_state_id_cli AS soil_state,
             COALESCE(
                 mlpr108, '{}'::int[]
             ) AS organic_component,
@@ -224,14 +221,10 @@ class GetGeologyLayer(Action):
                 uscs_original_lay, ''
             ) AS uscs_original,
             uscs_determination_id_cli AS uscs_determination,
-            -- layer.unconrocks_id_cli AS unconrocks,
             COALESCE(
                 mcla107, '{}'::int[]
             ) AS debris,
             layer.lithology_top_bedrock_id_cli AS lithology_top_bedrock,
-            lithok_id_cli AS lithok,
-            kirost_id_cli AS kirost,
-            unconrocks_id_cli AS unconrocks,
             COALESCE(
                 notes_lay, ''
             ) AS notes,

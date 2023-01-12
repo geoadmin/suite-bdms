@@ -78,12 +78,6 @@ public class Stratigraphy
     public string? Name { get; set; }
 
     /// <summary>
-    /// Gets or sets the <see cref="Stratigraphy"/>'s import id.
-    /// </summary>
-    [Column("import_id")]
-    public int? ImportId { get; set; }
-
-    /// <summary>
     /// Gets or sets the <see cref="Stratigraphy"/>'s kind id.
     /// </summary>
     [Column("kind_id_cli")]
@@ -117,6 +111,11 @@ public class Stratigraphy
     /// </summary>
     [Column("fill_casng_id_sty_fk")]
     public int? FillCasingId { get; set; }
+
+    /// <summary>
+    /// Gets or sets the <see cref="Stratigraphy"/>'s fill casing, which is also a <see cref="Stratigraphy"/>.
+    /// </summary>
+    public Stratigraphy FillCasing { get; set; }
 
     /// <summary>
     /// Gets the <see cref="Layer"/>s associated with the <see cref="Stratigraphy"/>.

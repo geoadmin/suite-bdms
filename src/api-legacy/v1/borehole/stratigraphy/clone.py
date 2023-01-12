@@ -37,26 +37,6 @@ class CloneStratigraphy(Action):
             """, id)
         )
 
-        # Copy stratigraphy_codelist
-        await self.conn.execute(f"""
-                INSERT INTO bdms.stratigraphy_codelist(
-                    id_sty_fk,
-                    id_cli_fk,
-                    code_cli
-                )
-
-                SELECT
-                    {id_sty} as id_sty_fk,
-                    id_cli_fk,
-                    code_cli
-
-                FROM
-                    bdms.stratigraphy_codelist
-
-                WHERE
-                    id_sty_fk = $1
-        """, id)
-
         recs = await self.conn.fetch("""
             SELECT
                 id_lay
@@ -81,14 +61,11 @@ class CloneStratigraphy(Action):
                     qt_description_id_cli,
                     lithology_id_cli,
                     chronostratigraphy_id_cli,
-                    tectonic_unit_id_cli,
-                    symbol_id_cli,
                     plasticity_id_cli,
                     consistance_id_cli,
                     gradation_id_cli,
                     alteration_id_cli,
                     compactness_id_cli,
-                    soil_state_id_cli,
                     grain_size_1_id_cli,
                     grain_size_2_id_cli,
                     cohesion_id_cli,
@@ -96,13 +73,10 @@ class CloneStratigraphy(Action):
                     uscs_2_id_cli,
                     uscs_original_lay,
                     uscs_determination_id_cli,
-                    kirost_id_cli,
                     notes_lay,
                     lithostratigraphy_id_cli,
                     humidity_id_cli,
                     striae_lay,
-                    unconrocks_id_cli,
-                    lithok_id_cli,
                     instr_kind_id_cli,
                     instr_status_id_cli,
                     instr_id_sty_fk,
@@ -130,14 +104,11 @@ class CloneStratigraphy(Action):
                     qt_description_id_cli,
                     lithology_id_cli,
                     chronostratigraphy_id_cli,
-                    tectonic_unit_id_cli,
-                    symbol_id_cli,
                     plasticity_id_cli,
                     consistance_id_cli,
                     gradation_id_cli,
                     alteration_id_cli,
                     compactness_id_cli,
-                    soil_state_id_cli,
                     grain_size_1_id_cli,
                     grain_size_2_id_cli,
                     cohesion_id_cli,
@@ -145,13 +116,10 @@ class CloneStratigraphy(Action):
                     uscs_2_id_cli,
                     uscs_original_lay,
                     uscs_determination_id_cli,
-                    kirost_id_cli,
                     notes_lay,
                     lithostratigraphy_id_cli,
                     humidity_id_cli,
                     striae_lay,
-                    unconrocks_id_cli,
-                    lithok_id_cli,
                     instr_kind_id_cli,
                     instr_status_id_cli,
                     instr_id_sty_fk,
@@ -175,26 +143,6 @@ class CloneStratigraphy(Action):
                 
                 RETURNING
                     id_lay
-            """, rec[0])
-
-            # Copy stratigraphy_codelist
-            await self.conn.execute(f"""
-                    INSERT INTO bdms.layer_codelist(
-                        id_lay_fk,
-                        id_cli_fk,
-                        code_cli
-                    )
-
-                    SELECT
-                        {id_lay} as id_lay_fk,
-                        id_cli_fk,
-                        code_cli
-
-                    FROM
-                        bdms.layer_codelist
-
-                    WHERE
-                        id_lay_fk = $1
             """, rec[0])
 
         return {

@@ -3,6 +3,7 @@ using System;
 using BDMS;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NetTopologySuite.Geometries;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
@@ -12,9 +13,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace BDMS.Migrations
 {
     [DbContext(typeof(BdmsContext))]
-    partial class BdmsContextModelSnapshot : ModelSnapshot
+    [Migration("20230109123554_AddMissingContraints")]
+    partial class AddMissingContraints
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -92,6 +94,10 @@ namespace BDMS.Migrations
                     b.Property<int?>("HrsId")
                         .HasColumnType("integer")
                         .HasColumnName("hrs_id_cli");
+
+                    b.Property<int?>("ImportId")
+                        .HasColumnType("integer")
+                        .HasColumnName("import_id");
 
                     b.Property<double?>("Inclination")
                         .HasColumnType("double precision")
@@ -217,6 +223,10 @@ namespace BDMS.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("status_id_cli");
 
+                    b.Property<int?>("TectonicId")
+                        .HasColumnType("integer")
+                        .HasColumnName("tecto_id_cli");
+
                     b.Property<double?>("TopBedrock")
                         .HasColumnType("double precision")
                         .HasColumnName("top_bedrock_bho");
@@ -292,6 +302,8 @@ namespace BDMS.Migrations
                     b.HasIndex("RestrictionId");
 
                     b.HasIndex("StatusId");
+
+                    b.HasIndex("TectonicId");
 
                     b.HasIndex("UpdatedById");
 
@@ -785,6 +797,10 @@ namespace BDMS.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("humidity_id_cli");
 
+                    b.Property<int?>("Import")
+                        .HasColumnType("integer")
+                        .HasColumnName("import_id");
+
                     b.Property<string>("Instrument")
                         .HasColumnType("text")
                         .HasColumnName("instr_id");
@@ -817,6 +833,14 @@ namespace BDMS.Migrations
                         .HasColumnType("boolean")
                         .HasColumnName("undefined_lay");
 
+                    b.Property<int?>("KirostId")
+                        .HasColumnType("integer")
+                        .HasColumnName("kirost_id_cli");
+
+                    b.Property<int?>("LithokId")
+                        .HasColumnType("integer")
+                        .HasColumnName("lithok_id_cli");
+
                     b.Property<int?>("LithologyId")
                         .HasColumnType("integer")
                         .HasColumnName("lithology_id_cli");
@@ -833,11 +857,6 @@ namespace BDMS.Migrations
                         .HasColumnType("text")
                         .HasColumnName("notes_lay");
 
-                    b.Property<string>("OriginalLithology")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("original_lithology");
-
                     b.Property<string>("OriginalUscs")
                         .HasColumnType("text")
                         .HasColumnName("uscs_original_lay");
@@ -850,13 +869,29 @@ namespace BDMS.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("qt_description_id_cli");
 
+                    b.Property<int?>("SoilStateId")
+                        .HasColumnType("integer")
+                        .HasColumnName("soil_state_id_cli");
+
                     b.Property<int?>("StratigraphyId")
                         .HasColumnType("integer")
                         .HasColumnName("id_sty_fk");
 
+                    b.Property<int?>("SymbolId")
+                        .HasColumnType("integer")
+                        .HasColumnName("symbol_id_cli");
+
+                    b.Property<int?>("TectonicUnitId")
+                        .HasColumnType("integer")
+                        .HasColumnName("tectonic_unit_id_cli");
+
                     b.Property<double?>("ToDepth")
                         .HasColumnType("double precision")
                         .HasColumnName("depth_to_lay");
+
+                    b.Property<int?>("UnconrocksId")
+                        .HasColumnType("integer")
+                        .HasColumnName("unconrocks_id_cli");
 
                     b.Property<DateTime?>("Update")
                         .HasColumnType("timestamp with time zone")
@@ -918,6 +953,10 @@ namespace BDMS.Migrations
 
                     b.HasIndex("InstrumentStatusId");
 
+                    b.HasIndex("KirostId");
+
+                    b.HasIndex("LithokId");
+
                     b.HasIndex("LithologyId");
 
                     b.HasIndex("LithologyTopBedrockId");
@@ -928,7 +967,15 @@ namespace BDMS.Migrations
 
                     b.HasIndex("QtDescriptionId");
 
+                    b.HasIndex("SoilStateId");
+
                     b.HasIndex("StratigraphyId");
+
+                    b.HasIndex("SymbolId");
+
+                    b.HasIndex("TectonicUnitId");
+
+                    b.HasIndex("UnconrocksId");
 
                     b.HasIndex("UpdatedById");
 
@@ -1085,6 +1132,10 @@ namespace BDMS.Migrations
                     b.Property<int?>("FillCasingId")
                         .HasColumnType("integer")
                         .HasColumnName("fill_casng_id_sty_fk");
+
+                    b.Property<int?>("ImportId")
+                        .HasColumnType("integer")
+                        .HasColumnName("import_id");
 
                     b.Property<bool?>("IsPrimary")
                         .HasColumnType("boolean")
@@ -1436,6 +1487,10 @@ namespace BDMS.Migrations
                         .WithMany()
                         .HasForeignKey("StatusId");
 
+                    b.HasOne("BDMS.Models.Codelist", "Tectonic")
+                        .WithMany()
+                        .HasForeignKey("TectonicId");
+
                     b.HasOne("BDMS.Models.User", "UpdatedBy")
                         .WithMany()
                         .HasForeignKey("UpdatedById");
@@ -1489,6 +1544,8 @@ namespace BDMS.Migrations
                     b.Navigation("Restriction");
 
                     b.Navigation("Status");
+
+                    b.Navigation("Tectonic");
 
                     b.Navigation("UpdatedBy");
 
@@ -1607,6 +1664,14 @@ namespace BDMS.Migrations
                         .WithMany()
                         .HasForeignKey("InstrumentStatusId");
 
+                    b.HasOne("BDMS.Models.Codelist", "Kirost")
+                        .WithMany()
+                        .HasForeignKey("KirostId");
+
+                    b.HasOne("BDMS.Models.Codelist", "Lithok")
+                        .WithMany()
+                        .HasForeignKey("LithokId");
+
                     b.HasOne("BDMS.Models.Codelist", "Lithology")
                         .WithMany()
                         .HasForeignKey("LithologyId");
@@ -1627,9 +1692,25 @@ namespace BDMS.Migrations
                         .WithMany()
                         .HasForeignKey("QtDescriptionId");
 
+                    b.HasOne("BDMS.Models.Codelist", "SoilState")
+                        .WithMany()
+                        .HasForeignKey("SoilStateId");
+
                     b.HasOne("BDMS.Models.Stratigraphy", "Stratigraphy")
                         .WithMany()
                         .HasForeignKey("StratigraphyId");
+
+                    b.HasOne("BDMS.Models.Codelist", "Symbol")
+                        .WithMany()
+                        .HasForeignKey("SymbolId");
+
+                    b.HasOne("BDMS.Models.Codelist", "TectonicUnit")
+                        .WithMany()
+                        .HasForeignKey("TectonicUnitId");
+
+                    b.HasOne("BDMS.Models.Codelist", "Unconrocks")
+                        .WithMany()
+                        .HasForeignKey("UnconrocksId");
 
                     b.HasOne("BDMS.Models.User", "UpdatedBy")
                         .WithMany()
@@ -1687,6 +1768,10 @@ namespace BDMS.Migrations
 
                     b.Navigation("InstrumentStatus");
 
+                    b.Navigation("Kirost");
+
+                    b.Navigation("Lithok");
+
                     b.Navigation("Lithology");
 
                     b.Navigation("LithologyTopBedrock");
@@ -1697,7 +1782,15 @@ namespace BDMS.Migrations
 
                     b.Navigation("QtDescription");
 
+                    b.Navigation("SoilState");
+
                     b.Navigation("Stratigraphy");
+
+                    b.Navigation("Symbol");
+
+                    b.Navigation("TectonicUnit");
+
+                    b.Navigation("Unconrocks");
 
                     b.Navigation("UpdatedBy");
 

@@ -11,6 +11,8 @@
 - Added cluster layer for displaying points on map while maintaining application performance.
 - Added input field to codelist translation UI, that is used to change the order of the codelist.
 - Added filter in editor mode for registration details creation date and user.
+- Added db constraints for `stratigraphy.fill_casng_id_sty_fk` and `layer.gradation_id_cli`.
+- Added new db field `original_lithology` to layer table. The new field contains english text values of `unconrocks_id_cli` and `lithok_id_cli`.
 
 ### Changed
 
@@ -19,6 +21,9 @@
 - Order codelists in translation UI by `order` column instead of by `geolcode`.
 - Coordinates, elevations diameters and depths in inputs and texts are now displayed with thousand separators.
 - Removed `mentions` functionality in workflow comments.
+- Removed unused columns from database: `borehole.import_id`, `borehole.tecto_id_cli`, `stratigraphy.import_id`, `layer.import_id`, `layer.tectonic_unit_id_cli`, `layer.symbol_id_cli`, `layer.soil_state_id_cli`, `layer.kirost_id_cli`.
+- Removed unused table `bdms.statigraphy_codelist` from database.
+- Removed  `layer.unconrocks_id_cli` and `layer.lithok_id_cli` from database.
 
 ### Fixed
 
@@ -36,6 +41,7 @@
 - Display dropdown with values from schema `qt_top_bedrock` for attribute `qt_depth` to streamline all qt drowpdowns
 - Display _Filter by map_ in Editor when appearance is _Large Map_.
 - Fix bug where clicks on clusters or points have been ignored on viewer map.
+- Fix bug where updating of `qt_depth` led to error.
 
 ## v2.0.65 - 2022-11-04
 

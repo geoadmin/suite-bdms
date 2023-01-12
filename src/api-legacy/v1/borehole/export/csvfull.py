@@ -202,8 +202,6 @@ class ExportCsvFull(Action):
                 sty.lithology,
                 sty.lithostratigraphy,
                 sty.chronostratigraphy,
-                sty.tectonic_unit,
-                sty.symbol,
                 sty.color,
                 sty.plasticity,
                 sty.humidity,
@@ -212,7 +210,6 @@ class ExportCsvFull(Action):
                 sty.alteration,
                 sty.compactness,
                 sty.jointing,
-                sty.soil_state,
                 sty.organic_component,
                 sty.striae,
                 sty.grain_size_1,
@@ -224,11 +221,8 @@ class ExportCsvFull(Action):
                 sty.uscs_3,
                 sty.uscs_original,
                 sty.uscs_determination,
-                sty.unconrocks,
                 sty.debris,
                 sty.lithology_top_bedrock,
-                sty.lithok,
-                sty.kirost,
                 sty.notes,
 
                 identifiers
@@ -282,7 +276,6 @@ class ExportCsvFull(Action):
                     lay_lith.geolcode AS lithology,
                     lay_lith_stra.geolcode AS lithostratigraphy,
                     lay_chrono_strati.geolcode AS chronostratigraphy,
-                    lay_tectonic_unit.geolcode AS tectonic_unit,
                     lay_symbol.geolcode AS symbol,
                     COALESCE(
                         mlpr112, '{}'::int[]
@@ -296,7 +289,6 @@ class ExportCsvFull(Action):
                     COALESCE(
                         mlpr113, '{}'::int[]
                     ) AS jointing,
-                    lay_soil_state.geolcode AS soil_state,
                     COALESCE(
                         mlpr108, '{}'::int[]
                     ) AS organic_component,
@@ -321,13 +313,10 @@ class ExportCsvFull(Action):
                     COALESCE(
                         mcla104, '{}'::int[]
                     ) AS uscs_determination,
-                    lay_unconrocks.geolcode AS unconrocks,
                     COALESCE(
                         mcla107, '{}'::int[]
                     ) AS debris,
                     lithology_top_bedrock_id_cli AS lithology_top_bedrock,
-                    lay_lithok.geolcode AS lithok,
-                    lay_kirost.geolcode AS kirost,
                     COALESCE(
                         notes_lay, ''
                     ) AS notes
@@ -339,12 +328,6 @@ class ExportCsvFull(Action):
                     bdms.layer
                 ON
                     layer.id_sty_fk = id_sty
-
-                LEFT JOIN bdms.codelist as lay_kirost
-                    ON lay_kirost.id_cli = kirost_id_cli
-
-                LEFT JOIN bdms.codelist as lay_lithok
-                    ON lay_lithok.id_cli = lithok_id_cli
 
                 LEFT JOIN (
                     SELECT
@@ -360,9 +343,6 @@ class ExportCsvFull(Action):
                     GROUP BY id_lay_fk
                 ) dbr
                 ON dbr.id_lay_fk = id_lay
-
-                LEFT JOIN bdms.codelist as lay_unconrocks
-                    ON lay_unconrocks.id_cli = unconrocks_id_cli
 
                 LEFT JOIN (
                     SELECT
@@ -454,9 +434,6 @@ class ExportCsvFull(Action):
                 ) oco
                 ON oco.id_lay_fk = id_lay
 
-                LEFT JOIN bdms.codelist as lay_soil_state
-                    ON lay_soil_state.id_cli = soil_state_id_cli
-
                 LEFT JOIN (
                     SELECT
                         id_lay_fk, array_agg(geolcode) as mlpr113
@@ -504,12 +481,6 @@ class ExportCsvFull(Action):
                     GROUP BY id_lay_fk
                 ) clr
                 ON clr.id_lay_fk = id_lay
-
-                LEFT JOIN bdms.codelist as lay_symbol
-                    ON lay_symbol.id_cli = symbol_id_cli
-
-                LEFT JOIN bdms.codelist as lay_tectonic_unit
-                    ON lay_tectonic_unit.id_cli = tectonic_unit_id_cli
 
                 LEFT JOIN bdms.codelist as lay_chrono_strati
                     ON lay_chrono_strati.id_cli = chronostratigraphy_id_cli
