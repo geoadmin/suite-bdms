@@ -13,6 +13,7 @@ const ChronostratigraphyPanel = ({ selectedStratigraphyID, isEditable }) => {
 
   const [navigationState, setNavigationState] = useState({
     minimapCursor: "grab",
+    // How much is visible. Ranges from greater than 0 to 1
     scale: 1,
     // Distance from top in px
     top: 0,

@@ -35,39 +35,19 @@ const LithologyLayers = props => {
   const handleOnWheel = event => {
     event.stopPropagation();
 
-    let scale = navigationState?.scale;
-    let factor = 0.05;
-    if (scale >= 0.75) {
-      factor = 0.1;
-    } else if (scale >= 0.5) {
-      factor = 0.05;
-    } else if (scale >= 0.2) {
-      factor = 0.025;
-    } else if (scale >= 0.05) {
-      factor = 0.01;
-    } else if (scale < 0.05) {
-      factor = 0.005;
-    }
+    const newScale = navigationState?.scale * 1.001 ** event.deltaY;
+    const clampedScale = Math.min(Math.max(newScale, 0.02), 1);
 
-    if (event.deltaY < 0) {
-      scale -= factor;
-    } else {
-      scale += factor;
-    }
-
-    const rangeHeight = scale * navigationState?.height;
-
-    let topOfLense = navigationState?.top;
-    if (navigationState?.top + rangeHeight > navigationState?.height) {
-      topOfLense =
-        navigationState?.top -
-        (navigationState?.top + rangeHeight - navigationState?.height);
-    }
+    // Reduce top so the visible part does not go past the bottom of the borehole
+    const newTop = Math.min(
+      navigationState?.top,
+      (1 - clampedScale) * navigationState?.height,
+    );
 
     setNavigationState(prevState => ({
       ...prevState,
-      scale: Math.min(Math.max(0.02, scale), 1),
-      top: topOfLense < 0 ? 0 : topOfLense,
+      scale: clampedScale,
+      top: newTop,
     }));
   };
 
