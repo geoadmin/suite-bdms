@@ -36,7 +36,7 @@ const LithologyLayers = props => {
     event.stopPropagation();
 
     const newScale = navigationState?.scale * 1.001 ** event.deltaY;
-    const clampedScale = Math.min(Math.max(newScale, 0.02), 1);
+    const clampedScale = Math.min(Math.max(newScale, 0.0005), 1);
 
     // Reduce top so the visible part does not go past the bottom of the borehole
     const newTop = Math.min(
