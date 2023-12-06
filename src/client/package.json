@@ -35,7 +35,7 @@
     "i18next": "^23.7.7",
     "i18next-browser-languagedetector": "^7.2.0",
     "i18next-http-backend": "^2.4.2",
-    "immer": "^10.0.3",
+    "immer": "^9.0.21",
     "lodash": "^4.17.21",
     "markdown-to-jsx": "^6.11.4",
     "moment": "^2.29.4",
